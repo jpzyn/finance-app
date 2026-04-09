@@ -1,14 +1,21 @@
 const prisma = require("../config/database");
 
 async function getAll() {
-  return await prisma.transaction.findMany();
+  return await prisma.transaction.findMany({
+    include: {
+      card: true,
+      category: true
+    }
+  });
 }
 
 async function create(data) {
   return await prisma.transaction.create({
     data: {
       tipo: data.tipo,
-      valor: data.valor
+      valor: data.valor,
+      cardId: data.cardId,
+      categoryId: data.categoryId
     }
   });
 } 
